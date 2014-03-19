@@ -1,16 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="no.hiof.coffeecontrol"
     xmlns:tools="http://schemas.android.com/tools"
+    package="no.hiof.coffeecontrol"
     android:versionCode="1"
     android:versionName="1.0" >
 
     <uses-sdk
         android:minSdkVersion="10"
         android:targetSdkVersion="19" />
-    
-    <uses-permission android:name="android.permission.VIBRATE"/>
-    <uses-feature android:name="android.hardware.sensor.accelerometer" android:required="true" />
+
+    <uses-permission android:name="android.permission.VIBRATE" />
+
+    <uses-feature
+        android:name="android.hardware.sensor.accelerometer"
+        android:required="true" />
 
     <application
         android:allowBackup="true"
@@ -26,14 +29,19 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
         <service
             android:name="no.hiof.coffeecontrol.service"
-    		tools:ignore="ExportedService">
+            tools:ignore="ExportedService" >
             <intent-filter>
                 <action android:name="no.hiof.action.VIBRATE" />
-                
             </intent-filter>
         </service>
+
+        <activity
+            android:name="no.hiof.coffeecontrol.CoffeeList"
+            android:label="@string/title_activity_coffee_list" >
+        </activity>
     </application>
 
 </manifest>

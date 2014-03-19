@@ -29,7 +29,7 @@ public class service extends Service implements SensorEventListener {
 	float last_x,last_y,last_z = 0;
 	long lastUpdate = 0;
 	
-	// Testing for doVibrate
+	// For doVibrate
 	long updat1=0;
 	long updat2=0;
 	
