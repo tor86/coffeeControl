@@ -29,6 +29,10 @@ public class service extends Service implements SensorEventListener {
 	float last_x,last_y,last_z = 0;
 	long lastUpdate = 0;
 	
+	// Testing for doVibrate
+	long updat1=0;
+	long updat2=0;
+	
 	public static final float SHAKE_TRESHOLD = 3000;
 	
 	@Override
@@ -100,13 +104,26 @@ public class service extends Service implements SensorEventListener {
 		      Log.d("intent running", "");
 		      //float speed = Math.abs(x+y+z-last_x-last_y-last_z) / diffTime * 10000;
 		      
-		      float speed = Math.abs(x+y+z-last_x-last_y-last_z) / diffTime * 10000;
+		      float deltax1 = Math.abs(x);
+		      float deltax2 = Math.abs(last_x);
+		      float deltax = x-last_x;
 		      
+		      float speed = Math.abs(deltax1+y+z-last_y-last_z-deltax2) / diffTime * 10000;
+		      
+		      ///////////////////////
+		      //float speed = Math.abs(x+y+z-last_x-last_y-last_z) / diffTime * 10000;
+		      //////////////////////
+		      
+		      //float speed = Math.abs(x+y-last_x-last_y) / diffTime * 10000;
+		      
+		      //Log.d("Values", "x: " + x + " and y: " + y + " and z: " + z);
 		      Log.d("sensor", "shake detected w/ speed: " + speed);
 		      if (speed > SHAKE_TRESHOLD) {
-		    	time2 = System.currentTimeMillis();
-		    	//if (Math.abs(time1-time2)>1000) {
-		        Log.d("sensor", "shake detected w/ speed: " + speed);
+		    	//time2 = (System.currentTimeMillis()-curTime)*1000;
+		    	//Log.d("Time2",(int)time2);
+		    	
+		    	//if ((time2-time1)>3) {
+		        //Log.d("sensor", "shake detected w/ speed: " + speed);
 		        Toast.makeText(this, "shake detected w/ speed: " + speed, Toast.LENGTH_SHORT).show();
 		        doVibrate();
 		    	//}
@@ -125,11 +142,18 @@ public class service extends Service implements SensorEventListener {
 	}
 	
 	public void doVibrate() {
+		updat1=System.currentTimeMillis();
+		if(updat2==0)updat2=System.currentTimeMillis();
 		// Get instance of Vibrator from current Context
+		if((Math.abs(updat2-updat1))>2000) {
 		Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
+		Log.d("doVibrate", "In doVibrate");
+		
 		// Vibrate for 400 milliseconds
 		v.vibrate(400);
+		}
+		updat2=updat1;
 	}
 	
 	@Override
