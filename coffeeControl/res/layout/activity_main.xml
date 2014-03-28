@@ -99,4 +99,14 @@
         android:textColor="#ffffff"
         android:textSize="100dp" />
 
+    <Button
+        android:id="@+id/button8"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/button1"
+        android:layout_alignLeft="@+id/button1"
+        android:onClick="addTestData"
+        android:text="Testdata" />
+
 </RelativeLayout>

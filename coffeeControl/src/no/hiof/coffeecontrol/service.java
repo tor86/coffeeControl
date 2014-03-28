@@ -20,6 +20,8 @@ import android.widget.Toast;
 
 public class service extends Service implements SensorEventListener {
 
+	MainActivity myMain = new MainActivity();
+	
 	int counter = 0;
 	SensorManager sensorMgr;
 	Sensor mySensor;
@@ -33,7 +35,7 @@ public class service extends Service implements SensorEventListener {
 	long updat1=0;
 	long updat2=0;
 	
-	public static final float SHAKE_TRESHOLD = 3000;
+	public static final float SHAKE_TRESHOLD = 2500;
 	
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId)
@@ -151,7 +153,10 @@ public class service extends Service implements SensorEventListener {
 		Log.d("doVibrate", "In doVibrate");
 		
 		// Vibrate for 400 milliseconds
-		v.vibrate(400);
+		v.vibrate(800);
+		
+		//myMain.updateAmount(1); 
+		myMain.getFromService();
 		}
 		updat2=updat1;
 	}

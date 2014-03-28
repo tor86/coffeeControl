@@ -20,12 +20,18 @@ import android.widget.TextView;
 
 public class MainActivity extends Activity {
 	private DataSource datasource;
-	//private int showNumber = 0;
+	
 	// This is an old version, which cause app to crash on resume:
 	// Intent startServiceIntent
-	Intent startServiceIntent = new Intent("no.hiof.action.VIBRATE");;
+	// Using the one below, it works, don't know why
+	Intent startServiceIntent = new Intent("no.hiof.action.VIBRATE");
+	
 	boolean isRunning;
 	public String dateToday;
+	
+	// This is for collecting accelerometer data
+	public static int amountFromService;
+	
 	//public int cupsToday=0;
 	
 //	@Override
@@ -39,10 +45,17 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
 		
+		// Makes a connection to data from database
 		datasource = new DataSource(this);
 		datasource.open();
 		
 		dateToday = getDate();
+		
+		// This updates the GUI with the current cup data
+		// From todays date
+		updateAmount(0);
+		onUpdateCups();
+		
 //		ListView listView = getListView();
 //		listView.setOnItemLongClickListener(new OnItemLongClickListener() {
 //			public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
@@ -103,6 +116,21 @@ public class MainActivity extends Activity {
 	@Override
   	protected void onResume() {
 		datasource.open();
+		//checkServiceData();
+//		if(amountFromService>0) {
+//		updateAmount(amountFromService);
+//		}
+//		onUpdateCups();
+//    	amountFromService=0;
+		if (amountFromService>0) {
+			Log.d("OnResume", "In onResume, with update from service data");
+			updateAmount(amountFromService);
+			Log.d("updating", Integer.toString(amountFromService));
+			amountFromService=0;
+			onUpdateCups();
+		}
+		onUpdateCups();
+		
     	super.onResume();
 	}
 
@@ -169,6 +197,33 @@ public class MainActivity extends Activity {
 	
 	}
 	
+	public void addTestData(View view) {
+		CreateCoffee createcoffee = new CreateCoffee();
+		try {
+		createcoffee.execute("20140215");
+		createcoffee.execute("20140217");
+		createcoffee.execute("20140219");
+		createcoffee.execute("20140221");
+		}
+		catch(Exception ex) {
+			
+		}
+		CreateCoffee createcoffee2 = new CreateCoffee();
+		try {
+		createcoffee2.execute("20140217");
+		}
+		catch(Exception ex) {
+			
+		}
+		CreateCoffee createcoffee3 = new CreateCoffee();
+		try {
+		createcoffee3.execute("20140219");
+		}
+		catch(Exception ex) {
+			
+		}
+	}
+	
 	public String getDate() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd"); 
     	String date = sdf.format(new Date());
@@ -180,7 +235,8 @@ public class MainActivity extends Activity {
 	}
 	
 	public void addOne(View view) {
-		updateAmount(1);
+		if (amountFromService>0)updateAmount(amountFromService);
+		else updateAmount(1);
 		onUpdateCups();
 	}
 	
@@ -192,5 +248,23 @@ public class MainActivity extends Activity {
 	public void onUpdateCups() {
 		TextView tv1 = (TextView)findViewById(R.id.textView1);
 		tv1.setText(Integer.toString(datasource.sendToFront()));
+	}
+	
+	public void getFromService() {
+		
+//		datasource.open();
+//		updateAmount(1);
+//		//onUpdateCups();
+//		datasource.close();
+		amountFromService+=1;
+		Log.d("Counter", Integer.toString(amountFromService));
+	}
+	
+	public void checkServiceData() {
+		if(amountFromService>0) {
+			updateAmount(amountFromService);
+		}
+		onUpdateCups();
+	    amountFromService=0;
 	}
 }
