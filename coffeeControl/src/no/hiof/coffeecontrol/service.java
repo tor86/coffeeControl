@@ -4,6 +4,8 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
 
+import no.hiof.coffeecontrol.database.DataSource;
+
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -21,6 +23,8 @@ import android.widget.Toast;
 public class service extends Service implements SensorEventListener {
 
 	MainActivity myMain = new MainActivity();
+	private DataSource datasource;
+	//private String dateToday;
 	
 	int counter = 0;
 	SensorManager sensorMgr;
@@ -64,6 +68,8 @@ public class service extends Service implements SensorEventListener {
 		counter++;
 		
 		//doVibrate();
+		
+		datasource = new DataSource(this);
 		
 		return START_NOT_STICKY;
 	}
@@ -145,18 +151,25 @@ public class service extends Service implements SensorEventListener {
 	
 	public void doVibrate() {
 		updat1=System.currentTimeMillis();
-		if(updat2==0)updat2=System.currentTimeMillis();
+		if(updat2==0)updat2=(System.currentTimeMillis())+2010;
 		// Get instance of Vibrator from current Context
 		if((Math.abs(updat2-updat1))>2000) {
 		Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
 		Log.d("doVibrate", "In doVibrate");
 		
+		//myMain.getDate();
+		datasource.open();
+		datasource.updateRow(myMain.getDate(), 1);
+		datasource.close();
+		
 		// Vibrate for 400 milliseconds
 		v.vibrate(800);
 		
-		//myMain.updateAmount(1); 
-		myMain.getFromService();
+		//myMain.updateAmount(1);
+		
+		//This we are using now
+		//myMain.getFromService();
 		}
 		updat2=updat1;
 	}

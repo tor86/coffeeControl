@@ -129,6 +129,7 @@ public class MainActivity extends Activity {
 			amountFromService=0;
 			onUpdateCups();
 		}
+		updateAmount(0);
 		onUpdateCups();
 		
     	super.onResume();
