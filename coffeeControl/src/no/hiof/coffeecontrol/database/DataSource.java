@@ -102,6 +102,24 @@ public class DataSource {
 		return coffeedata;
 	}
 	
+	public List<CoffeeData> getSelection() {
+		List<CoffeeData> coffeedata = new ArrayList<CoffeeData>();
+		
+		//Cursor cursor = database.query(table, columns, selection, selectionArgs, groupBy, having, orderBy);
+		Cursor cursor = database.query(CoffeeTable.TABLE_COFFEE, allCoffeeColumns, CoffeeTable.COLUMN_AMOUNT + " > " + 4, null, null, null, null);
+		
+		cursor.moveToFirst();
+		while (!cursor.isAfterLast()) {
+			CoffeeData coffee = cursorToShow(cursor);
+			coffeedata.add(coffee);
+			cursor.moveToNext();
+		}
+		// Make sure to close the cursor
+		cursor.close();
+		
+		return coffeedata;
+	}
+	
 	public void deleteTest(CoffeeData test) {
 		long id = test.getId();
 		

@@ -17,6 +17,8 @@ import android.widget.AdapterView.OnItemLongClickListener;
 
 public class CoffeeList extends ListActivity {
 	private DataSource datasource;
+	CoffeeAdapter adapter;
+	List<CoffeeData> coffeedata;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -34,12 +36,16 @@ public class CoffeeList extends ListActivity {
 		datasource = new DataSource(this);
 		datasource.open();
 		//////////////SHould this be used?/////////////////
-		List<CoffeeData> coffeedata = datasource.getAllCoffee();
+		//List<CoffeeData> coffeedata = datasource.getAllCoffee();
+		coffeedata = datasource.getAllCoffee();
+		
+		///// For making a selection /////
+		//List<CoffeeData> coffeedata = datasource.getSelection();
 
-	    CoffeeAdapter adapter = new CoffeeAdapter(this, android.R.layout.simple_list_item_1);
+	    //CoffeeAdapter adapter = new CoffeeAdapter(this, android.R.layout.simple_list_item_1);
+		adapter = new CoffeeAdapter(this, android.R.layout.simple_list_item_1);
 	    setListAdapter(adapter);
 	    adapter.addAll(coffeedata);
-	    Log.d("Break","Stops here");
 	    
 	    //We do it here:
 //	    MainActivity myMain = new MainActivity();
@@ -67,5 +73,31 @@ public class CoffeeList extends ListActivity {
 		datasource.close();
 		super.onPause();
 	}
+	
+	public void updateGreater(View view) {
+		//datasource.getSelection();
+	}
+	
+	public void updateLesser(View view) {
+		
+	}
+	
+	public void updateBefore(View view) {
+		
+	}
+	
+	public void updateAfter(View view) {
+		
+	}
+	
+	public void reset(View view) {
+		coffeedata = datasource.getSelection();
+		adapter.clear();
+		adapter.addAll(coffeedata);
+	}
 
+//	List<CoffeeData> coffeedata = datasource.getAllCoffee();
+//	setListAdapter(adapter);
+//    adapter.addAll(coffeedata);
+	
 }
