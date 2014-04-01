@@ -48,7 +48,12 @@ public class CoffeeList extends ListActivity {
 	    //CoffeeAdapter adapter = new CoffeeAdapter(this, android.R.layout.simple_list_item_1);
 		adapter = new CoffeeAdapter(this, android.R.layout.simple_list_item_1);
 	    setListAdapter(adapter);
-	    adapter.addAll(coffeedata);
+	    
+	    /// This is for newer versions 3.0+
+	    //adapter.addAll(coffeedata);
+	    
+	    // This is for compatibility with older versions.
+	    adapter.setData(coffeedata);
 	    
 	    //We do it here:
 //	    MainActivity myMain = new MainActivity();
@@ -97,7 +102,12 @@ public class CoffeeList extends ListActivity {
 		coffeedata = datasource.getSelection(1, et.getText().toString());
 		
 		adapter.clear();
-		adapter.addAll(coffeedata);
+		
+		/// This is for newer versions 3.0+
+		//adapter.addAll(coffeedata);
+		
+		// This is for compatibility with older versions.
+	    adapter.setData(coffeedata);
 		}
 		catch(Exception ex){
 			Log.d("adapter", ex.toString());
@@ -111,7 +121,12 @@ public class CoffeeList extends ListActivity {
 		coffeedata = datasource.getSelection(2, et.getText().toString());
 		
 		adapter.clear();
-		adapter.addAll(coffeedata);
+		
+		/// This is for newer versions 3.0+
+		//adapter.addAll(coffeedata);
+		
+		// This is for compatibility with older versions.
+	    adapter.setData(coffeedata);
 		}
 		catch(Exception ex){
 			Log.d("adapter", ex.toString());
@@ -134,7 +149,12 @@ public class CoffeeList extends ListActivity {
 			coffeedata = datasource.getSelection(4, filterDate);
 			
 			adapter.clear();
-			adapter.addAll(coffeedata);
+			
+			/// This is for newer versions 3.0+
+			//adapter.addAll(coffeedata);
+			
+			// This is for compatibility with older versions.
+		    adapter.setData(coffeedata);
 			}
 			catch(Exception ex){
 				Log.d("adapter", ex.toString());
@@ -149,7 +169,13 @@ public class CoffeeList extends ListActivity {
 			coffeedata = datasource.getSelection(3, filterDate);
 			
 			adapter.clear();
-			adapter.addAll(coffeedata);
+			
+			/// This is for newer versions 3.0+
+			//adapter.addAll(coffeedata);
+			
+			// This is for compatibility with older versions.
+		    adapter.setData(coffeedata);
+		    
 			}
 			catch(Exception ex){
 				Log.d("adapter", ex.toString());
@@ -160,7 +186,12 @@ public class CoffeeList extends ListActivity {
 		coffeedata = datasource.getAllCoffee();
 		//coffeedata = datasource.getSelection(0,"null");
 		adapter.clear();
-		adapter.addAll(coffeedata);
+		
+		/// This is for newer versions 3.0+
+		//adapter.addAll(coffeedata);
+		
+		// This is for compatibility with older versions.
+	    adapter.setData(coffeedata);
 	}
 	
 	public void dateBuilder() {

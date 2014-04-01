@@ -1,5 +1,8 @@
 package no.hiof.coffeecontrol;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.Context;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -43,4 +46,25 @@ public class CoffeeAdapter extends ArrayAdapter<CoffeeData> {
 
 	    return view;
 	}
+	
+	
+	
+	
+	//// This is for backwards compatibility
+	
+	public void setData(List<CoffeeData> coffeedata) {
+	    clear();
+	    setNotifyOnChange(false);
+	    if (coffeedata != null) {
+	        for (CoffeeData item : coffeedata)
+	            add(item);
+	    }
+	    notifyDataSetChanged();
+	}
+	
+	////////////////////////////////////////
+	
+	
+	
+	
 }
