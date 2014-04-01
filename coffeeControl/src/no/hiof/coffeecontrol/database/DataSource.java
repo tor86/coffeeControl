@@ -102,11 +102,31 @@ public class DataSource {
 		return coffeedata;
 	}
 	
-	public List<CoffeeData> getSelection() {
+	public List<CoffeeData> getSelection(int filter,String criteria) {
 		List<CoffeeData> coffeedata = new ArrayList<CoffeeData>();
 		
+		Cursor cursor;
+		
+		// 1: Greater than , 2: Less than , 3: After , 4: Before 
+		
+		switch(filter) {
+		case(1):
+			 cursor = database.query(CoffeeTable.TABLE_COFFEE, allCoffeeColumns, CoffeeTable.COLUMN_AMOUNT + " > " + Integer.parseInt(criteria), null, null, null, null);
+		break;
+		case(2):
+			 cursor = database.query(CoffeeTable.TABLE_COFFEE, allCoffeeColumns, CoffeeTable.COLUMN_AMOUNT + " < " + Integer.parseInt(criteria), null, null, null, null);
+		break;
+		case(3):
+			 cursor = database.query(CoffeeTable.TABLE_COFFEE, allCoffeeColumns, CoffeeTable.COLUMN_DATE + " > " + Integer.parseInt(criteria), null, null, null, null);
+		break;
+		case(4):
+			 cursor = database.query(CoffeeTable.TABLE_COFFEE, allCoffeeColumns, CoffeeTable.COLUMN_DATE + " < " + Integer.parseInt(criteria), null, null, null, null);
+		break;
+		default:
+			cursor = database.query(CoffeeTable.TABLE_COFFEE, allCoffeeColumns, CoffeeTable.COLUMN_AMOUNT + " > " + -1, null, null, null, null);
+		}
 		//Cursor cursor = database.query(table, columns, selection, selectionArgs, groupBy, having, orderBy);
-		Cursor cursor = database.query(CoffeeTable.TABLE_COFFEE, allCoffeeColumns, CoffeeTable.COLUMN_AMOUNT + " > " + 4, null, null, null, null);
+		//Cursor cursor = database.query(CoffeeTable.TABLE_COFFEE, allCoffeeColumns, CoffeeTable.COLUMN_AMOUNT + " > " + 4, null, null, null, null);
 		
 		cursor.moveToFirst();
 		while (!cursor.isAfterLast()) {

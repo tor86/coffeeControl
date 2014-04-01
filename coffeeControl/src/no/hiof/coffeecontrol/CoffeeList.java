@@ -12,6 +12,7 @@ import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.AdapterView.OnItemLongClickListener;
 
@@ -19,6 +20,8 @@ public class CoffeeList extends ListActivity {
 	private DataSource datasource;
 	CoffeeAdapter adapter;
 	List<CoffeeData> coffeedata;
+	String filterDate;
+	String filterAmount;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -74,30 +77,108 @@ public class CoffeeList extends ListActivity {
 		super.onPause();
 	}
 	
+	@Override
+	public void onResume() {
+		datasource.open();
+		super.onResume();
+	}
+	
+	@Override
+	public void onDestroy() {
+		datasource.close();
+		super.onDestroy();
+	}
+	
 	public void updateGreater(View view) {
 		//datasource.getSelection();
+		EditText et = (EditText)findViewById(R.id.editText1);
+		
+		try{
+		coffeedata = datasource.getSelection(1, et.getText().toString());
+		
+		adapter.clear();
+		adapter.addAll(coffeedata);
+		}
+		catch(Exception ex){
+			Log.d("adapter", ex.toString());
+		}
 	}
 	
 	public void updateLesser(View view) {
+		EditText et = (EditText)findViewById(R.id.editText1);
 		
+		try{
+		coffeedata = datasource.getSelection(2, et.getText().toString());
+		
+		adapter.clear();
+		adapter.addAll(coffeedata);
+		}
+		catch(Exception ex){
+			Log.d("adapter", ex.toString());
+		}
 	}
 	
 	public void updateBefore(View view) {
+//		EditText et = (EditText)findViewById(R.id.editText2);
+//		EditText et2 = (EditText)findViewById(R.id.editText3);
+//		EditText et3 = (EditText)findViewById(R.id.editText4);
+//		String date1 = et.getText().toString();
+//		String date2 = et2.getText().toString();
+//		String date3 = et3.getText().toString();
+//		
+//		filterDate = date1+date2+date3;
+		
+		dateBuilder();
+		
+		try{
+			coffeedata = datasource.getSelection(4, filterDate);
+			
+			adapter.clear();
+			adapter.addAll(coffeedata);
+			}
+			catch(Exception ex){
+				Log.d("adapter", ex.toString());
+			}
 		
 	}
 	
 	public void updateAfter(View view) {
+		dateBuilder();
 		
+		try{
+			coffeedata = datasource.getSelection(3, filterDate);
+			
+			adapter.clear();
+			adapter.addAll(coffeedata);
+			}
+			catch(Exception ex){
+				Log.d("adapter", ex.toString());
+			}
 	}
 	
 	public void reset(View view) {
-		coffeedata = datasource.getSelection();
+		coffeedata = datasource.getAllCoffee();
+		//coffeedata = datasource.getSelection(0,"null");
 		adapter.clear();
 		adapter.addAll(coffeedata);
+	}
+	
+	public void dateBuilder() {
+		EditText et = (EditText)findViewById(R.id.editText2);
+		EditText et2 = (EditText)findViewById(R.id.editText3);
+		EditText et3 = (EditText)findViewById(R.id.editText4);
+		String date1 = et.getText().toString();
+		String date2 = et2.getText().toString();
+		String date3 = et3.getText().toString();
+		
+		filterDate = date1+date2+date3;
 	}
 
 //	List<CoffeeData> coffeedata = datasource.getAllCoffee();
 //	setListAdapter(adapter);
 //    adapter.addAll(coffeedata);
+	
+//	EditText editText = (EditText) findViewById(R.id.editText1);
+//	String value = editText.getText().toString();
 	
 }
