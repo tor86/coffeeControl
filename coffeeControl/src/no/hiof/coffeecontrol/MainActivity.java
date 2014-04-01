@@ -268,4 +268,10 @@ public class MainActivity extends Activity {
 		onUpdateCups();
 	    amountFromService=0;
 	}
+	
+//	public void startWidget(View view) {
+//		//startActivity(new Intent(this,WidgetActivity.class));
+//		Intent widget = new Intent("android.appwidget.action.APPWIDGET_UPDATE");
+//		startActivity(widget);
+//	}
 }

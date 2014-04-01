@@ -1,0 +1,20 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:background="#1e8cbe"
+    android:layout_gravity="center" >
+
+    <TextView
+        android:id="@+id/widget_textview"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="50dp"
+        android:text="Coffee"
+        android:layout_gravity="center_horizontal|center"
+        android:layout_marginTop="5dip"
+        android:padding="10dip"
+        android:textAppearance="?android:attr/textAppearanceMedium" />
+
+</RelativeLayout>
