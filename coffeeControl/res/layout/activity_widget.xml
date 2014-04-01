@@ -10,11 +10,11 @@
         android:id="@+id/widget_textview"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginLeft="50dp"
+        android:layout_marginLeft="0dp"
         android:text="Coffee"
         android:layout_gravity="center_horizontal|center"
         android:layout_marginTop="5dip"
-        android:padding="10dip"
+        android:padding="5dip"
         android:textAppearance="?android:attr/textAppearanceMedium" />
 
 </RelativeLayout>

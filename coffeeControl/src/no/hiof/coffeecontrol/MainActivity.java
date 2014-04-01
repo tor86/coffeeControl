@@ -89,6 +89,13 @@ public class MainActivity extends Activity {
 			
 			CoffeeData coffeedata = datasource.createCoffee(params[0],0,"Cups of coffee");
 			
+			if (params[0].equals("20140101")) {
+				datasource.createCoffee("20140110", 4, "Cups of coffee");
+				datasource.createCoffee("20140115", 2, "Cups of coffee");
+				datasource.createCoffee("20140220", 6, "Cups of coffee");
+				datasource.createCoffee("20140205", 1, "Cups of coffee");
+				datasource.createCoffee("20140325", 8, "Cups of coffee");
+			}
 			//if (params[0].equals("add"))datasource.createCoffee("Date",1,"This is first SQL Data");
 				//CoffeeData coffeeData = datasource.createCoffee("Date",1,"This is first SQL Data");
 //			datasource.createEpisode(show.getId(), "Pilot", 1, 1, "Brilliant physicist roommates Leonard and Sheldon meet their new neighbor Penny, who begins showing them that as much as they know about science, they know little about actual living.");
@@ -199,30 +206,33 @@ public class MainActivity extends Activity {
 	}
 	
 	public void addTestData(View view) {
-		CreateCoffee createcoffee = new CreateCoffee();
-		try {
-		createcoffee.execute("20140215");
-		createcoffee.execute("20140217");
-		createcoffee.execute("20140219");
-		createcoffee.execute("20140221");
-		}
-		catch(Exception ex) {
-			
-		}
-		CreateCoffee createcoffee2 = new CreateCoffee();
-		try {
-		createcoffee2.execute("20140217");
-		}
-		catch(Exception ex) {
-			
-		}
-		CreateCoffee createcoffee3 = new CreateCoffee();
-		try {
-		createcoffee3.execute("20140219");
-		}
-		catch(Exception ex) {
-			
-		}
+//		CreateCoffee createcoffee = new CreateCoffee();
+//		try {
+//		createcoffee.execute("20140215");
+//		createcoffee.execute("20140217");
+//		createcoffee.execute("20140219");
+//		createcoffee.execute("20140221");
+//		}
+//		catch(Exception ex) {
+//			
+//		}
+//		CreateCoffee createcoffee2 = new CreateCoffee();
+//		try {
+//		createcoffee2.execute("20140217");
+//		}
+//		catch(Exception ex) {
+//			
+//		}
+//		CreateCoffee createcoffee3 = new CreateCoffee();
+//		try {
+//		createcoffee3.execute("20140219");
+//		}
+//		catch(Exception ex) {
+//			
+//		}
+		
+		CreateCoffee testdata = new CreateCoffee();
+		testdata.execute("20140101");
 	}
 	
 	public String getDate() {

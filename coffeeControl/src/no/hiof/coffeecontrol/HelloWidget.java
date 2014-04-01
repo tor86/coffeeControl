@@ -44,7 +44,7 @@ public class HelloWidget extends AppWidgetProvider {
 	        
 	        remoteViews = new RemoteViews( context.getPackageName(), R.layout.activity_widget );
 	        watchWidget = new ComponentName( context, HelloWidget.class );
-	        remoteViews.setTextViewText( R.id.widget_textview, amount + " Number of cups");
+	        remoteViews.setTextViewText( R.id.widget_textview, amount + " cups of coffee");
 	        //remoteViews.setTextViewText( R.id.widget_textview, "Time = " + format.format( new Date()));
 //	        }
 //	        catch(Exception ex) {
