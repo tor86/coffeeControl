@@ -14,7 +14,19 @@
         android:text="Coffee"
         android:layout_gravity="center_horizontal|center"
         android:layout_marginTop="5dip"
+        android:textSize="20sp"
         android:padding="5dip"
+        
         android:textAppearance="?android:attr/textAppearanceMedium" />
+
+    <Button
+        android:id="@+id/sync_button"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_toRightOf="@+id/widget_textview"
+        android:text="Refresh"
+        android:textSize="6sp" />
 
 </RelativeLayout>
