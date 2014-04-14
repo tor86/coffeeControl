@@ -167,6 +167,7 @@ public class service extends Service implements SensorEventListener {
 		datasource.updateRow(myMain.getDate(), 1);
 		datasource.close();
 		
+		myMain.updateNow=true;
 		// Vibrate for 800 milliseconds to verify shake
 		v.vibrate(800);
 		
@@ -189,4 +190,11 @@ public class service extends Service implements SensorEventListener {
 		}
 	}
 
+	
+	
+	
+	
+	
+	
+	
 }

@@ -51,4 +51,10 @@ public class HelloWidget extends AppWidgetProvider {
 	        appWidgetManager.updateAppWidget( watchWidget, remoteViews );
 	    }
 	 
+	 
+//	 public void onReceive(Context context, Intent intent) {
+//		 
+//	 }
+	 
+	 
 }

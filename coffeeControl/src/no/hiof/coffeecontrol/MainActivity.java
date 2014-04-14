@@ -7,6 +7,7 @@ import java.util.Date;
 import no.hiof.coffeecontrol.database.DataSource;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -29,6 +30,8 @@ public class MainActivity extends Activity {
 	// Intent startServiceIntent
 	// Using the one below, it works, don't know why
 	Intent startServiceIntent = new Intent("no.hiof.action.VIBRATE");
+	
+	public boolean updateNow = false;
 	
 	boolean isRunning;
 	public String dateToday;
@@ -105,6 +108,10 @@ public class MainActivity extends Activity {
 	@Override
   	protected void onResume() {
 		datasource.open();
+		
+		// A thread handler
+		if(runnable!=null)runnable.run();
+    	else runnable.notify();
 
 // This is old. New code makes service update directly
 		
@@ -126,6 +133,9 @@ public class MainActivity extends Activity {
 
 	@Override
 	protected void onPause() {
+		// A thread handler
+		handler.removeCallbacks(runnable);
+		
 		datasource.close();
 		super.onPause();
 	}
@@ -142,10 +152,26 @@ public class MainActivity extends Activity {
     	// startServiceIntent = new Intent("no.hiof.action.VIBRATE");
 
     	startService(startServiceIntent);
+    	
+    	// A thread handler
+    	if(runnable!=null)runnable.run();
+    	else runnable.notify();
+    	//checkService.run();
     }
     
-    public void stopMyService(View view) {
+    public void stopMyService(View view) throws InterruptedException {
     	stopService(startServiceIntent);
+    	
+    	// A thread handler
+    	handler.removeCallbacks(runnable);
+    	 
+//    	synchronized(runnable){
+//    		  runnable.wait();
+//    		}
+    	
+    	
+    	//runnable.wait();
+    	//checkService.interrupt();
     }
     
     // Opens the list with the coffee dates and amount
@@ -245,4 +271,46 @@ public class MainActivity extends Activity {
 	         .show();
 	}
 	
+	
+//	Thread checkService = new Thread(new Runnable() {
+//
+//		@Override
+//		public void run() {
+//			// TODO Auto-generated method stub
+//			Timer timer = new TimerTask();
+//			if (updateNow=true) {
+//				updateAmount(0);
+//				onUpdateCups();
+//				updateNow=false;
+//			}
+//		}});
+	
+	
+	// Below is a way to check for updates from the service when in the UI
+	// This way we can update the UI immediately after shake is detected
+	
+	private Handler handler = new Handler();
+//	handler.postDelayed(runnable, 100);
+	
+	private Runnable runnable = new Runnable() {
+		   @Override
+		   public void run() {
+		      /* do what you need to do */
+		      //foobar();
+			   
+			   if (updateNow=true) {
+					updateAmount(0);
+					onUpdateCups();
+					updateNow=false;
+				}
+			   
+			   Log.d("runnable", "in Thread");
+			   
+		      /* and here comes the "trick" */
+		      handler.postDelayed(this, 1000);
+		   }
+		};
+		
+	//////////////////////////
+		
 }
