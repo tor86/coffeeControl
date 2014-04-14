@@ -13,10 +13,15 @@ import android.util.Log;
 import android.widget.RemoteViews;
 import android.widget.TextView;
 
+/*
+ * Shows current cups of coffee for same day
+ * in a widget on home screen
+ */
+
 public class HelloWidget extends AppWidgetProvider {
 
 	private DataSource datasource;
-	private static SQLiteHelper dbh;
+	//private static SQLiteHelper dbh;
 	
 	public String getDate() {
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd"); 
@@ -29,13 +34,8 @@ public class HelloWidget extends AppWidgetProvider {
 	    {
 	        RemoteViews remoteViews;
 	        ComponentName watchWidget;
-//	        DateFormat format = SimpleDateFormat.getTimeInstance( SimpleDateFormat.MEDIUM, Locale.getDefault() );
-//
-//	        remoteViews = new RemoteViews( context.getPackageName(), R.layout.main );
-//	        watchWidget = new ComponentName( context, WatchWidget.class );
-//	        remoteViews.setTextViewText( R.id.widget_textview, "Time = " + format.format( new Date()));
-//	        appWidgetManager.updateAppWidget( watchWidget, remoteViews );
-//	        try {
+	        
+	        // Opens the database and gets amount from current day
 	        datasource = new DataSource(context);
 	        datasource.open();
 	        datasource.updateRow(getDate(), 0);
@@ -45,40 +45,10 @@ public class HelloWidget extends AppWidgetProvider {
 	        remoteViews = new RemoteViews( context.getPackageName(), R.layout.activity_widget );
 	        watchWidget = new ComponentName( context, HelloWidget.class );
 	        remoteViews.setTextViewText( R.id.widget_textview, amount + " cups of coffee");
-	        //remoteViews.setTextViewText( R.id.widget_textview, "Time = " + format.format( new Date()));
-//	        }
-//	        catch(Exception ex) {
-//	        	Log.d("Widget", ex.toString());
-//	        }
+
+	        // Updates the widget with a string. Android standard is 30 minutes
+	        // to save battery. We can set custom update frequency by using timer
 	        appWidgetManager.updateAppWidget( watchWidget, remoteViews );
 	    }
-	
-	 
-//	 
-//	 private static SQLiteHelper getDatabaseHelper(){
-//		  if(dbh==null){
-//		     dbh = new SQLiteHelper(Context context);
-//		     dbh.openDatabase();
-//		  }
-//		  return dbh;
-//		}
-	 
 	 
 }
-
-
-////public void onUpdateCups() {
-////	TextView tv1 = (TextView)findViewById(R.id.textView1);
-////	tv1.setText(Integer.toString(datasource.sendToFront()));
-////}
-//updateamount()
-//datasource.updateRow(dateToday, amount);
-//
-//dateToday = getDate();
-//
-//// This updates the GUI with the current cup data
-//// From todays date
-//updateAmount(0);
-//onUpdateCups();
-
-

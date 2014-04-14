@@ -38,16 +38,22 @@ public class CoffeeList extends ListActivity {
 		
 		datasource = new DataSource(this);
 		datasource.open();
-		//////////////SHould this be used?/////////////////
+		
+		//////////////Should this be used?/////////////////
 		//List<CoffeeData> coffeedata = datasource.getAllCoffee();
+		
+		// Makes new list of coffee and dates
 		coffeedata = datasource.getAllCoffee();
 		
 		///// For making a selection /////
 		//List<CoffeeData> coffeedata = datasource.getSelection();
 
 	    //CoffeeAdapter adapter = new CoffeeAdapter(this, android.R.layout.simple_list_item_1);
+		
 		adapter = new CoffeeAdapter(this, android.R.layout.simple_list_item_1);
 	    setListAdapter(adapter);
+	    
+	    // Code below adds coffeelist to the adapter
 	    
 	    /// This is for newer versions 3.0+
 	    //adapter.addAll(coffeedata);
@@ -55,14 +61,10 @@ public class CoffeeList extends ListActivity {
 	    // This is for compatibility with older versions.
 	    adapter.setData(coffeedata);
 	    
-	    //We do it here:
-//	    MainActivity myMain = new MainActivity();
-//	    MainActivity.CreateCoffee createdata = myMain.new CreateCoffee();
-//	    //MainActivity.CreateCoffee createdata = MainActivity.new CreateCoffee();
-//	    createdata.execute();
 	}
 
 	
+	@SuppressWarnings("unchecked")
 	public void getFromMain(CoffeeData coffeedata) {
 		ArrayAdapter<CoffeeData> adapter = (ArrayAdapter<CoffeeData>) getListAdapter();
 		
@@ -94,6 +96,9 @@ public class CoffeeList extends ListActivity {
 		super.onDestroy();
 	}
 	
+	// Filtering options:
+	
+	// Gets all entries with cups greater than set number
 	public void updateGreater(View view) {
 		//datasource.getSelection();
 		EditText et = (EditText)findViewById(R.id.editText1);
@@ -114,6 +119,7 @@ public class CoffeeList extends ListActivity {
 		}
 	}
 	
+	// Gets all entries with cups less than set number
 	public void updateLesser(View view) {
 		EditText et = (EditText)findViewById(R.id.editText1);
 		
@@ -133,15 +139,8 @@ public class CoffeeList extends ListActivity {
 		}
 	}
 	
+	// Gets all data before set date
 	public void updateBefore(View view) {
-//		EditText et = (EditText)findViewById(R.id.editText2);
-//		EditText et2 = (EditText)findViewById(R.id.editText3);
-//		EditText et3 = (EditText)findViewById(R.id.editText4);
-//		String date1 = et.getText().toString();
-//		String date2 = et2.getText().toString();
-//		String date3 = et3.getText().toString();
-//		
-//		filterDate = date1+date2+date3;
 		
 		dateBuilder();
 		
@@ -162,6 +161,7 @@ public class CoffeeList extends ListActivity {
 		
 	}
 	
+	// Gets all data after set date
 	public void updateAfter(View view) {
 		dateBuilder();
 		
@@ -182,6 +182,7 @@ public class CoffeeList extends ListActivity {
 			}
 	}
 	
+	// Resets selection and adds all items
 	public void reset(View view) {
 		coffeedata = datasource.getAllCoffee();
 		//coffeedata = datasource.getSelection(0,"null");
@@ -194,6 +195,7 @@ public class CoffeeList extends ListActivity {
 	    adapter.setData(coffeedata);
 	}
 	
+	// Building a date string
 	public void dateBuilder() {
 		EditText et = (EditText)findViewById(R.id.editText2);
 		EditText et2 = (EditText)findViewById(R.id.editText3);
@@ -204,12 +206,5 @@ public class CoffeeList extends ListActivity {
 		
 		filterDate = date1+date2+date3;
 	}
-
-//	List<CoffeeData> coffeedata = datasource.getAllCoffee();
-//	setListAdapter(adapter);
-//    adapter.addAll(coffeedata);
-	
-//	EditText editText = (EditText) findViewById(R.id.editText1);
-//	String value = editText.getText().toString();
 	
 }

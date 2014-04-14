@@ -26,11 +26,13 @@ public class DataSource {
 		dbHelper = new SQLiteHelper(context);
 	}
 	
+	// Makes a entry in the database
 	public CoffeeData createCoffee(String date, int amount, String desc) {
 		ContentValues values = new ContentValues();
 		values.put(CoffeeTable.COLUMN_DATE, date);
 		values.put(CoffeeTable.COLUMN_AMOUNT, amount);
 		values.put(CoffeeTable.COLUMN_DESC, desc);
+		// Checks if the date is already added, and adds entry if not
 		if(!exists(date)){
 		long insertId = database.insert(CoffeeTable.TABLE_COFFEE, null, values);
 		
@@ -39,23 +41,26 @@ public class DataSource {
 		else return null;
 	}
 	
+	// Check if date exists
 	public boolean exists(String date) {
-		
 		
 		String sqlSearch = "SELECT * FROM coffee WHERE DATE = " + date;
 		Cursor getRawData = database.rawQuery(sqlSearch, null);
 		getRawData.moveToFirst();
 		if(getRawData.getCount()>=1) {
 			Log.d("Duplicate", "getRawData has value "+getRawData.getCount());
+			getRawData.close();	
 			return true;
 		}
 		else {
 			Log.d("Cursor", "No data found");
+			getRawData.close();	
 			return false;
 		}
-			
+		
 	}
 	
+	// Not used
 	public CoffeeData deleteCoffee(String date, int amount, String desc) {
 //		ContentValues values = new ContentValues();
 //		values.put(CoffeeTable.COLUMN_DATE, date);
@@ -83,6 +88,7 @@ public class DataSource {
 		return coffee;
 	}
 	
+	// Gets the entire database
 	public List<CoffeeData> getAllCoffee() {
 		List<CoffeeData> coffeedata = new ArrayList<CoffeeData>();
 		
@@ -102,6 +108,7 @@ public class DataSource {
 		return coffeedata;
 	}
 	
+	// Gets a selection based on which filter is used in listactivity
 	public List<CoffeeData> getSelection(int filter,String criteria) {
 		List<CoffeeData> coffeedata = new ArrayList<CoffeeData>();
 		
@@ -140,6 +147,7 @@ public class DataSource {
 		return coffeedata;
 	}
 	
+	// Not used
 	public void deleteTest(CoffeeData test) {
 		long id = test.getId();
 		
@@ -153,27 +161,38 @@ public class DataSource {
 		database.delete(CoffeeTable.TABLE_COFFEE, CoffeeTable.COLUMN_ID + " = " + id, null);
 	}
 	
+	// Updates a row with new values
 	public void updateRow (String date,int amount) {
 		ContentValues newValues = new ContentValues();
 		String sqlSearch = "SELECT * FROM coffee WHERE DATE = " + date;
 		Cursor getRawData = database.rawQuery(sqlSearch, null);
 		getRawData.moveToFirst();
+		
+		// If data exists
 		if(getRawData.getCount()>=1) {
 		Log.d("Cursor", "getRawData has value "+getRawData.getCount());
+		// Get current value, and update with new value
 		int valueNow = getRawData.getInt(2);
 		valueNow = valueNow+(amount);
+		// Send value to main activity
 		valueToFront=valueNow;
 		sendToFront();
 		//getRawData.
 		Log.d("Value", Integer.toString(valueNow));
 		//newValues.put("amount", "amount " + amount);
+		// Updates database
 		newValues.put("amount", valueNow);
 		String where = "date = " + date;
 		database.update(CoffeeTable.TABLE_COFFEE, newValues, where, null);
 		}
+		
 		else Log.d("Cursor", "No data found");
+		
+		// Need to close cursor
+		getRawData.close();
 	}
 	
+	// Deletes the whole database
 	public void deleteRow() {
 		CoffeeData test = new CoffeeData();
 		long id = test.getId();
@@ -191,6 +210,7 @@ public class DataSource {
 		return coffee;
 	}
 	
+	// Sends value to main UI
 	public int sendToFront() {
 		if (valueToFront!=0)return valueToFront;
 		else return 0;

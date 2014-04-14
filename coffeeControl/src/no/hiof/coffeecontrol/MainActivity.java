@@ -2,23 +2,27 @@ package no.hiof.coffeecontrol;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.List;
+//import java.util.List;
 
 import no.hiof.coffeecontrol.database.DataSource;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.ListView;
-import android.widget.AdapterView.OnItemLongClickListener;
+//import android.widget.AdapterView;
+//import android.widget.ArrayAdapter;
+//import android.widget.ListView;
+//import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
+	
+	// Connection to database data
 	private DataSource datasource;
 	
 	// This is an old version, which cause app to crash on resume:
@@ -30,9 +34,8 @@ public class MainActivity extends Activity {
 	public String dateToday;
 	
 	// This is for collecting accelerometer data
+	// This is not used. We update database directly from service
 	public static int amountFromService;
-	
-	//public int cupsToday=0;
 	
 //	@Override
 //	protected void onCreate(Bundle savedInstanceState) {
@@ -65,30 +68,19 @@ public class MainActivity extends Activity {
 //		});
 //		
 //		List<TestData> testdata = datasource.getAllShows();
-//
-//	    TestAdapter adapter = new TestAdapter(this, android.R.layout.simple_list_item_1);
-//	    setListAdapter(adapter);
-//	    adapter.addAll(testdata);
-//	    Log.d("Break","Stops here");
-//	    
-//	    //We do it here:
-//	    CreateShow createdata = new CreateShow();
-//	    createdata.execute();
 	}
 	
-	
+	// Runs a task in background for adding database entries
 	public class CreateCoffee extends AsyncTask<String, Void, CoffeeData> {
 
 		@Override
 		protected CoffeeData doInBackground(String... params) {
-			//String[] testdata = getResources().getStringArray(R.array.testdata);
-			//if (params[0].equals("add"))CoffeeData coffeedata = datasource.createCoffee("date", 1, "Some Data");
-			
-			//////////////////We are using this ////////////////////
-			//CoffeeData coffeedata = datasource.createCoffee("Date",1,"This is first SQL Data");
+			// A demo entry
+			// CoffeeData coffeedata = datasource.createCoffee("Date",1,"This is first SQL Data");
 			
 			CoffeeData coffeedata = datasource.createCoffee(params[0],0,"Cups of coffee");
 			
+			// This adds data for testing purposes
 			if (params[0].equals("20140101")) {
 				datasource.createCoffee("20140110", 4, "Cups of coffee");
 				datasource.createCoffee("20140115", 2, "Cups of coffee");
@@ -96,12 +88,6 @@ public class MainActivity extends Activity {
 				datasource.createCoffee("20140205", 1, "Cups of coffee");
 				datasource.createCoffee("20140325", 8, "Cups of coffee");
 			}
-			//if (params[0].equals("add"))datasource.createCoffee("Date",1,"This is first SQL Data");
-				//CoffeeData coffeeData = datasource.createCoffee("Date",1,"This is first SQL Data");
-//			datasource.createEpisode(show.getId(), "Pilot", 1, 1, "Brilliant physicist roommates Leonard and Sheldon meet their new neighbor Penny, who begins showing them that as much as they know about science, they know little about actual living.");
-//			datasource.createEpisode(show.getId(), "The Big Bran Hypothesis", 2, 1, "Brilliant physicist roommates Leonard and Sheldon meet their new neighbor Penny, who begins showing them that as much as they know about science, they know little about actual living.");
-//			
-			//if (params[0].equals("delete"))datasource.deleteCoffee(null, 0, null);
 			
 			return coffeedata;
 			//return null;
@@ -110,32 +96,28 @@ public class MainActivity extends Activity {
 		@Override
 		protected void onPostExecute(CoffeeData coffeedata) {
 			//@SuppressWarnings("unchecked")
-			
-//			CoffeeList myList = new CoffeeList();
-//			myList.getFromMain(coffeedata);
-			
-//			ArrayAdapter<CoffeeData> adapter = (ArrayAdapter<CoffeeData>) getListAdapter();
-//			
-//			adapter.add(testdata);
+			// Here we can do something when async is finished
+			// We currently do not use this for now
+			// asyncDone=true;
 		}
 	}
 	
 	@Override
   	protected void onResume() {
 		datasource.open();
-		//checkServiceData();
-//		if(amountFromService>0) {
-//		updateAmount(amountFromService);
+
+// This is old. New code makes service update directly
+		
+// Updates cup data from service when activity is reopened
+//		if (amountFromService>0) {
+//			Log.d("OnResume", "In onResume, with update from service data");
+//			updateAmount(amountFromService);
+//			Log.d("updating", Integer.toString(amountFromService));
+//			amountFromService=0;
+//			onUpdateCups();
 //		}
-//		onUpdateCups();
-//    	amountFromService=0;
-		if (amountFromService>0) {
-			Log.d("OnResume", "In onResume, with update from service data");
-			updateAmount(amountFromService);
-			Log.d("updating", Integer.toString(amountFromService));
-			amountFromService=0;
-			onUpdateCups();
-		}
+		
+		// Gets amount each time activity is reopened
 		updateAmount(0);
 		onUpdateCups();
 		
@@ -147,12 +129,6 @@ public class MainActivity extends Activity {
 		datasource.close();
 		super.onPause();
 	}
-	
-	
-	
-	
-	
-	
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -172,65 +148,27 @@ public class MainActivity extends Activity {
     	stopService(startServiceIntent);
     }
     
+    // Opens the list with the coffee dates and amount
     public void openHistory(View view) {
     	startActivity(new Intent(this,CoffeeList.class));
     }
     
-//	public void itemAddOnClick(MenuItem item) {
-//	CreateShow createShow = new CreateShow();
-//	createShow.execute();
-//}
-    
+    // Adds todays date if not already added
 	public void itemAddOnClick(View view) {
 	CreateCoffee createcoffee = new CreateCoffee();
 	createcoffee.execute(dateToday);
 	}
 	
+	// Deletes database after confirmation
 	public void deleteLastEntry(View view) {
-//	CreateCoffee createcoffee = new CreateCoffee();
-//	createcoffee.execute("delete");	
 		
-	datasource.deleteRow();	
-	
-	//datasource.deleteCoffee(null, 0, null);
+	deleteShowDialog();
 		
-//	@SuppressWarnings("unchecked")
-//	ArrayAdapter<Coffee> adapter = (ArrayAdapter<Coffee>) getListAdapter();
-//		
-//	while (adapter.getCount() > 0) {
-//		Show show = adapter.getItem(0);
-//		datasource.deleteShow(show);
-//		adapter.remove(show);
-//	}
+	//datasource.deleteRow();	
 	
 	}
 	
 	public void addTestData(View view) {
-//		CreateCoffee createcoffee = new CreateCoffee();
-//		try {
-//		createcoffee.execute("20140215");
-//		createcoffee.execute("20140217");
-//		createcoffee.execute("20140219");
-//		createcoffee.execute("20140221");
-//		}
-//		catch(Exception ex) {
-//			
-//		}
-//		CreateCoffee createcoffee2 = new CreateCoffee();
-//		try {
-//		createcoffee2.execute("20140217");
-//		}
-//		catch(Exception ex) {
-//			
-//		}
-//		CreateCoffee createcoffee3 = new CreateCoffee();
-//		try {
-//		createcoffee3.execute("20140219");
-//		}
-//		catch(Exception ex) {
-//			
-//		}
-		
 		CreateCoffee testdata = new CreateCoffee();
 		testdata.execute("20140101");
 	}
@@ -241,36 +179,40 @@ public class MainActivity extends Activity {
     	return date;
 	}
 	
+	// Updates todays cups with a new amount
 	public void updateAmount(int amount) {
 		datasource.updateRow(dateToday, amount);
 	}
 	
+	// Adds one cup. Creates new day if not already made
 	public void addOne(View view) {
+		CreateCoffee createcoffee = new CreateCoffee();
+		createcoffee.execute(dateToday);
+		
 		if (amountFromService>0)updateAmount(amountFromService);
 		else updateAmount(1);
 		onUpdateCups();
 	}
 	
+	// Minus one cup
 	public void reduceOne(View view) {
-		updateAmount(-1);
+		if(datasource.sendToFront()>0)updateAmount(-1);
 		onUpdateCups();
 	}
 	
+	// Updates UI, the number in main window
 	public void onUpdateCups() {
 		TextView tv1 = (TextView)findViewById(R.id.textView1);
 		tv1.setText(Integer.toString(datasource.sendToFront()));
 	}
 	
+	// Not used
 	public void getFromService() {
-		
-//		datasource.open();
-//		updateAmount(1);
-//		//onUpdateCups();
-//		datasource.close();
 		amountFromService+=1;
 		Log.d("Counter", Integer.toString(amountFromService));
 	}
 	
+	// Not used
 	public void checkServiceData() {
 		if(amountFromService>0) {
 			updateAmount(amountFromService);
@@ -279,9 +221,28 @@ public class MainActivity extends Activity {
 	    amountFromService=0;
 	}
 	
-//	public void startWidget(View view) {
-//		//startActivity(new Intent(this,WidgetActivity.class));
-//		Intent widget = new Intent("android.appwidget.action.APPWIDGET_UPDATE");
-//		startActivity(widget);
+//	public void updateAfterShake() {
+//		updateAmount(0);
+//		onUpdateCups();
 //	}
+	
+	// Deletes database after confirmation message
+	private void deleteShowDialog() {
+		new AlertDialog.Builder(this)
+	        .setTitle("Delete database?")
+	        .setMessage("Are you sure you want to delete the database?")
+	        .setPositiveButton(android.R.string.yes, new DialogInterface.OnClickListener() {
+	            public void onClick(DialogInterface dialog, int which) { 
+	            	datasource.deleteRow();	
+	            }
+	         })
+	        .setNegativeButton(android.R.string.no, new DialogInterface.OnClickListener() {
+	            public void onClick(DialogInterface dialog, int which) { 
+	                // Do nothing
+	            }
+	         })
+	        .setIcon(android.R.drawable.ic_dialog_alert)
+	         .show();
+	}
+	
 }

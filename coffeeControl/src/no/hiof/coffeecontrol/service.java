@@ -1,8 +1,8 @@
 package no.hiof.coffeecontrol;
 
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
+//import java.text.SimpleDateFormat;
+//import java.util.Date;
+//import java.util.Locale;
 
 import no.hiof.coffeecontrol.database.DataSource;
 
@@ -39,8 +39,10 @@ public class service extends Service implements SensorEventListener {
 	long updat1=0;
 	long updat2=0;
 	
+	// For detecting how much shaking is needed
 	public static final float SHAKE_TRESHOLD = 2500;
 	
+	// Starts sensor
 	@Override
 	public int onStartCommand(Intent intent, int flags, int startId)
 	{	
@@ -80,18 +82,20 @@ public class service extends Service implements SensorEventListener {
 		
 	}
 
+	// Check the accelerometer and uses the data to update cups
 	@Override
 	public void onSensorChanged(SensorEvent arg0) {
 		// TODO Auto-generated method stub
 		float values[] = arg0.values;
-//		float x,y,z = 0;
-//		float last_x,last_y,last_z = 0;
 //		long lastUpdate;
-		long time1,time2;
+		//long time1,time2;
 		
 		if (arg0.sensor.equals(mySensor)) {
 		//if (sensor == SensorManager.SENSOR_ACCELEROMETER) {
 		//if (arg0.sensor.equals(Sensor.TYPE_ACCELEROMETER)){
+			
+			// Uses the difference between current time and last time
+			// the sensor was checked
 		    long curTime = System.currentTimeMillis();
 		    if (lastUpdate==0)lastUpdate=System.currentTimeMillis();
 		    // only allow one update every 100ms.
@@ -102,27 +106,24 @@ public class service extends Service implements SensorEventListener {
 		      x = values[0];
 		      y = values[1];
 		      z = values[2];
-
-		      //Using shake within time limit:
-		      // When shake is detected, check current time. 
-		      // Then check next shake detection. If difftime is
-		      // smaller than given time, don't do anything.
 		      
 		      //time1 = System.currentTimeMillis();
 		      Log.d("intent running", "");
 		      //float speed = Math.abs(x+y+z-last_x-last_y-last_z) / diffTime * 10000;
 		      
+		      // Here we need absolute values, because some phones
+		      // have different type of accelerometer data.
+		      // That can be a problem. It is tested on three devices.
 		      float deltax1 = Math.abs(x);
 		      float deltax2 = Math.abs(last_x);
 		      float deltax = x-last_x;
 		      
+		      // Detects shake speed and direction
 		      float speed = Math.abs(deltax1+y+z-last_y-last_z-deltax2) / diffTime * 10000;
 		      
 		      ///////////////////////
 		      //float speed = Math.abs(x+y+z-last_x-last_y-last_z) / diffTime * 10000;
 		      //////////////////////
-		      
-		      //float speed = Math.abs(x+y-last_x-last_y) / diffTime * 10000;
 		      
 		      //Log.d("Values", "x: " + x + " and y: " + y + " and z: " + z);
 		      Log.d("sensor", "shake detected w/ speed: " + speed);
@@ -131,8 +132,9 @@ public class service extends Service implements SensorEventListener {
 		    	//Log.d("Time2",(int)time2);
 		    	
 		    	//if ((time2-time1)>3) {
-		        //Log.d("sensor", "shake detected w/ speed: " + speed);
 		        Toast.makeText(this, "shake detected w/ speed: " + speed, Toast.LENGTH_SHORT).show();
+		        
+		        // Calls the method for updating data if the shake is done after a set period
 		        doVibrate();
 		    	//}
 		      }
@@ -150,6 +152,8 @@ public class service extends Service implements SensorEventListener {
 	}
 	
 	public void doVibrate() {
+		// Using time values so it will not update more than one cup at a time.
+		// We do this so we have to wait at least 2 sec before updating again
 		updat1=System.currentTimeMillis();
 		if(updat2==0)updat2=(System.currentTimeMillis())+2010;
 		// Get instance of Vibrator from current Context
@@ -158,17 +162,17 @@ public class service extends Service implements SensorEventListener {
 
 		Log.d("doVibrate", "In doVibrate");
 		
-		//myMain.getDate();
+		// Connects to database and updates todays entry with 1 
 		datasource.open();
 		datasource.updateRow(myMain.getDate(), 1);
 		datasource.close();
 		
-		// Vibrate for 400 milliseconds
+		// Vibrate for 800 milliseconds to verify shake
 		v.vibrate(800);
 		
 		//myMain.updateAmount(1);
 		
-		//This we are using now
+		//This is not used, we update directly instead
 		//myMain.getFromService();
 		}
 		updat2=updat1;

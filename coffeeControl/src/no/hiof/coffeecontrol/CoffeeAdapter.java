@@ -10,6 +10,9 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+// This class makes it possible to display data from database in
+// a ListActivity using arraylist
+
 public class CoffeeAdapter extends ArrayAdapter<CoffeeData> {
 	
 	public CoffeeAdapter(Context context, int resource) {
@@ -63,8 +66,5 @@ public class CoffeeAdapter extends ArrayAdapter<CoffeeData> {
 	}
 	
 	////////////////////////////////////////
-	
-	
-	
 	
 }
