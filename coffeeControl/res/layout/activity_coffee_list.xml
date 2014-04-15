@@ -38,7 +38,7 @@
         android:layout_toRightOf="@+id/editText1"
         android:onClick="updateLesser"
         android:ems="5"
-        android:text="Lesser" />
+        android:text="@string/lesser" />
 
     <Button
         android:id="@+id/button2"
@@ -49,7 +49,7 @@
         android:layout_toRightOf="@+id/button1"
         android:ems="5"
         android:onClick="updateGreater"
-        android:text="Greater" />
+        android:text="@string/greater" />
 
     <EditText
         android:id="@+id/editText3"
@@ -98,7 +98,7 @@
         android:layout_alignLeft="@+id/editText2"
         android:layout_below="@+id/editText2"
         android:onClick="updateBefore"
-        android:text="Before" />
+        android:text="@string/before" />
 
     <Button
         android:id="@+id/button5"
@@ -109,7 +109,7 @@
         android:layout_alignBottom="@+id/button4"
         android:layout_alignRight="@+id/button2"
         android:onClick="reset"
-        android:text="Reset" />
+        android:text="@string/reset" />
 
     <Button
         android:id="@+id/button4"
@@ -120,6 +120,6 @@
         android:layout_alignBottom="@+id/button3"
         android:layout_alignLeft="@+id/editText3"
         android:onClick="updateAfter"
-        android:text="After" />
+        android:text="@string/after" />
 
 </RelativeLayout>

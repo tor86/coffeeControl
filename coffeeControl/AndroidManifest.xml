@@ -40,6 +40,7 @@
 
         <activity
             android:name="no.hiof.coffeecontrol.CoffeeList"
+            android:windowSoftInputMode="adjustPan"
             android:label="@string/title_activity_coffee_list" >
         </activity>
         <activity

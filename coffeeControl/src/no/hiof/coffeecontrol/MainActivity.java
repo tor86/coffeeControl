@@ -20,6 +20,7 @@ import android.view.View;
 //import android.widget.ListView;
 //import android.widget.AdapterView.OnItemLongClickListener;
 import android.widget.TextView;
+import android.widget.ToggleButton;
 
 public class MainActivity extends Activity {
 	
@@ -271,6 +272,19 @@ public class MainActivity extends Activity {
 	         .show();
 	}
 	
+	public void onToggleClicked(View view) throws InterruptedException {
+	    // Is the toggle on?
+		ToggleButton toggle = (ToggleButton)findViewById(R.id.toggleButton1);
+	    boolean on = toggle.isChecked();
+	    
+	    if (on) {
+	    	startMyService(view); 
+	        // Enable vibrate
+	    } else {
+	    	stopMyService(view);
+	        // Disable vibrate
+	    }
+	}
 	
 //	Thread checkService = new Thread(new Runnable() {
 //

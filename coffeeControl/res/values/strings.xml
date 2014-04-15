@@ -6,5 +6,17 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_coffee_list">CoffeeList</string>
     <string name="title_activity_widget">WidgetActivity</string>
+    <string name="shake">Shakelistener</string>
+    <string name="history">Open history</string>
+    <string name="delete_all">Delete database</string>
+    <string name="plus_one">+1 Cup</string>
+    <string name="minus_one">-1 Cup</string>
+    <string name="test">Testdata</string>
+    <string name="cups_number">Number of cups</string>
+    <string name="lesser">Lesser</string>
+    <string name="greater">Greater</string>
+    <string name="before">Before</string>
+    <string name="after">After</string>
+    <string name="reset">Reset</string>
 
 </resources>
