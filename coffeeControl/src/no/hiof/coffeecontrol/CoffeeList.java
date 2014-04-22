@@ -7,6 +7,7 @@ import no.hiof.coffeecontrol.database.DataSource;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.ListActivity;
+import android.content.Intent;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -205,6 +206,10 @@ public class CoffeeList extends ListActivity {
 		String date3 = et3.getText().toString();
 		
 		filterDate = date1+date2+date3;
+	}
+	
+	public void showGraph(View view) {
+		startActivity(new Intent(this,GraphActivity.class));
 	}
 	
 }

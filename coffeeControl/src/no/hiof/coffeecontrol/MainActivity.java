@@ -72,6 +72,7 @@ public class MainActivity extends Activity {
 //		});
 //		
 //		List<TestData> testdata = datasource.getAllShows();
+		
 	}
 	
 	// Runs a task in background for adding database entries
@@ -91,6 +92,21 @@ public class MainActivity extends Activity {
 				datasource.createCoffee("20140220", 6, "Cups of coffee");
 				datasource.createCoffee("20140205", 1, "Cups of coffee");
 				datasource.createCoffee("20140325", 8, "Cups of coffee");
+				
+				
+				// More data
+				
+//				datasource.createCoffee("20130110", 4, "Cups of coffee");
+//				datasource.createCoffee("20130115", 2, "Cups of coffee");
+//				datasource.createCoffee("20130220", 6, "Cups of coffee");
+//				datasource.createCoffee("20130205", 1, "Cups of coffee");
+//				datasource.createCoffee("20130325", 8, "Cups of coffee");
+//				
+//				datasource.createCoffee("20120110", 4, "Cups of coffee");
+//				datasource.createCoffee("20120115", 2, "Cups of coffee");
+//				datasource.createCoffee("20120220", 6, "Cups of coffee");
+//				datasource.createCoffee("20120205", 1, "Cups of coffee");
+//				datasource.createCoffee("20120325", 8, "Cups of coffee");
 			}
 			
 			return coffeedata;
@@ -178,6 +194,7 @@ public class MainActivity extends Activity {
     // Opens the list with the coffee dates and amount
     public void openHistory(View view) {
     	startActivity(new Intent(this,CoffeeList.class));
+    	//startActivity(new Intent(this,GraphActivity.class));
     }
     
     // Adds todays date if not already added

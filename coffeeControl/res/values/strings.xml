@@ -18,5 +18,7 @@
     <string name="before">Before</string>
     <string name="after">After</string>
     <string name="reset">Reset</string>
+    <string name="title_activity_graph">GraphActivity</string>
+    <string name="graph">Graph</string>
 
 </resources>

@@ -93,7 +93,7 @@
     <Button
         android:id="@+id/button3"
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="80dp"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
         android:layout_alignLeft="@+id/editText2"
         android:layout_below="@+id/editText2"
@@ -103,23 +103,31 @@
     <Button
         android:id="@+id/button5"
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="80dp"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button4"
-        android:layout_alignBottom="@+id/button4"
-        android:layout_alignRight="@+id/button2"
+        android:layout_below="@+id/editText4"
+        android:layout_toRightOf="@+id/button4"
         android:onClick="reset"
         android:text="@string/reset" />
 
     <Button
         android:id="@+id/button4"
         style="?android:attr/buttonStyleSmall"
-        android:layout_width="80dp"
+        android:layout_width="70dp"
         android:layout_height="wrap_content"
-        android:layout_alignBaseline="@+id/button3"
-        android:layout_alignBottom="@+id/button3"
-        android:layout_alignLeft="@+id/editText3"
+        android:layout_below="@+id/editText3"
+        android:layout_toRightOf="@+id/button3"
         android:onClick="updateAfter"
         android:text="@string/after" />
+
+    <Button
+        android:id="@+id/button6"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="70dp"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/button5"
+        android:layout_toRightOf="@+id/button5"
+        android:onClick="showGraph"
+        android:text="@string/graph" />
 
 </RelativeLayout>
