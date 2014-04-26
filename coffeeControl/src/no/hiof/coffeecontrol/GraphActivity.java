@@ -28,6 +28,8 @@ import android.widget.LinearLayout;
 
 public class GraphActivity extends Activity {
 
+	public int yMax = 10;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -52,15 +54,29 @@ public class GraphActivity extends Activity {
 		Collections.sort(coffeeList, comparator);
 		
 		// New set for bargraph
-		GraphViewData[] dataset = new GraphViewData[coffeeList.size()];
+		
+		// The bar x lenght has a fixed value. If there is few entries
+		// , the entries will fill  a lot of size. Ex. one entry takes as much 
+		// space as 10 entries, making it very "fat". We use empty values
+		// to make it thinner.
+		int arrayOriginal = coffeeList.size();
+		int arrayNew = arrayOriginal;
+		if (arrayOriginal<5)arrayNew=5;
+		int diff = arrayNew-arrayOriginal;
+		
+		//GraphViewData[] dataset = new GraphViewData[coffeeList.size()];
+		GraphViewData[] dataset = new GraphViewData[arrayNew];
 		
 		String[] dates = new String[coffeeList.size()];
 		
 		// The code below makes new entries into the bargraph, based
 		// on the arraylist
 		
-		for (int i=0;i<coffeeList.size();i++) {
+		for (int i=0;i<arrayOriginal;i++) {
+		//for (int i=0;i<coffeeList.size();i++) {
+					
 			int cups = coffeeList.get(i).getAmount();
+			if (cups>yMax)cups=yMax;
 			String date = coffeeList.get(i).getDate();
 			String mmdd = date.substring(4, 8);
 			int dateint = Integer.parseInt(date);
@@ -68,8 +84,16 @@ public class GraphActivity extends Activity {
 			dates[i]=mmdd;
 			
 			dataset[i] = new GraphViewData(0,cups);
-			
+			//int diff = arrayNew-arrayOriginal;
+			//if (diff>0)dataset[i+diff+arrayOriginal] = new GraphViewData(0,0);
 		}
+		
+		// Adding zero values
+		for (int i=0;i<diff;i++) {
+			dataset[arrayOriginal+i] = new GraphViewData(0,0);
+		}
+		
+		// 3 verdier, skal til 5, diff 2
 		
 		GraphViewSeries coffeeSeries = new GraphViewSeries(dataset);
 		
@@ -91,8 +115,8 @@ public class GraphActivity extends Activity {
 		// Setting som custom stuff for the graph, like color
 		
 		graphView.setBackgroundColor(Color.rgb(255, 255, 255));
-		graphView.setManualYAxisBounds(10, 0);
-		graphView.getGraphViewStyle().setNumVerticalLabels(11);
+		graphView.setManualYAxisBounds(yMax, 0);
+		graphView.getGraphViewStyle().setNumVerticalLabels(yMax+1);
 		
 		graphView.getGraphViewStyle().setVerticalLabelsColor(Color.rgb(0, 0, 0));
 		graphView.getGraphViewStyle().setHorizontalLabelsColor(Color.rgb(0, 0, 0));

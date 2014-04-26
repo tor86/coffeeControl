@@ -6,6 +6,8 @@ package no.hiof.coffeecontrol;
 
 import no.hiof.coffeecontrol.database.DataSource;
 
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.Service;
 import android.content.Context;
 import android.content.Intent;
@@ -14,8 +16,10 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.IBinder;
 import android.os.Vibrator;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -25,6 +29,8 @@ public class service extends Service implements SensorEventListener {
 	MainActivity myMain = new MainActivity();
 	private DataSource datasource;
 	//private String dateToday;
+	
+	int _notificationId = 1;
 	
 	int counter = 0;
 	SensorManager sensorMgr;
@@ -41,6 +47,12 @@ public class service extends Service implements SensorEventListener {
 	
 	// For detecting how much shaking is needed
 	public static final float SHAKE_TRESHOLD = 2500;
+	
+	@Override
+	public void onCreate() {
+		startInForeground();
+		super.onCreate();
+	}
 	
 	// Starts sensor
 	@Override
@@ -191,6 +203,47 @@ public class service extends Service implements SensorEventListener {
 	}
 
 	
+	
+	
+	
+	@SuppressWarnings("deprecation")
+	private void startInForeground()
+	{
+		// Set basic notification information
+		int notificationIcon = R.drawable.ic_launcher;
+		String notificationTickerText = "Starting Shakelistener";
+		long notificationTimeStamp = System.currentTimeMillis();
+		
+		// Describe what to do if the user clicks on the notification in the status bar
+		String notificationTitleText = "CoffeeControl";
+        String notificationBodyText = "Shakelistener active";
+        Intent notificationActivityIntent = new Intent(this, MainActivity.class);
+        notificationActivityIntent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+        PendingIntent startMyActivityPendingIntent = PendingIntent.getActivity(this, 0, notificationActivityIntent, 0);
+		
+        Notification foregroundNotification = null;
+        
+		final int sdkVersion = Build.VERSION.SDK_INT;
+		if (sdkVersion < Build.VERSION_CODES.HONEYCOMB)
+		{
+			foregroundNotification = new Notification(notificationIcon, notificationTickerText, notificationTimeStamp);
+			foregroundNotification.setLatestEventInfo(this, notificationTitleText, notificationBodyText, startMyActivityPendingIntent);
+		}
+		else
+		{
+			NotificationCompat.Builder notificationbuilder = new NotificationCompat.Builder(this)
+														.setSmallIcon(notificationIcon)
+														.setTicker(notificationTickerText)
+													    .setWhen(notificationTimeStamp);
+			
+			foregroundNotification = notificationbuilder.setContentTitle(notificationTitleText)
+											.setContentText(notificationBodyText)
+											.setContentIntent(startMyActivityPendingIntent).build();
+		}
+        // ID to use w/ Notification Manager for _foregroundNotification
+        // Set the service to foreground status and provide notification info
+        startForeground(_notificationId, foregroundNotification);
+	}
 	
 	
 	
