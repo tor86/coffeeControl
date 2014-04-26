@@ -9,6 +9,8 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.app.Activity;
+import android.app.ActivityManager;
+import android.app.ActivityManager.RunningServiceInfo;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -51,6 +53,8 @@ public class MainActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		setToggle();
 		
 		// Makes a connection to data from database
 		datasource = new DataSource(this);
@@ -125,6 +129,8 @@ public class MainActivity extends Activity {
 	@Override
   	protected void onResume() {
 		datasource.open();
+		
+		setToggle();
 		
 		// A thread handler
 		if(runnable!=null)runnable.run();
@@ -343,5 +349,22 @@ public class MainActivity extends Activity {
 		};
 		
 	//////////////////////////
+		
+		private void setToggle() {
+			ToggleButton tg = (ToggleButton)findViewById(R.id.toggleButton1);
+			tg.setChecked(isMyServiceRunning());
+		}
+		
+		private boolean isMyServiceRunning() {
+		    ActivityManager manager = (ActivityManager) getSystemService(ACTIVITY_SERVICE);
+		    for (RunningServiceInfo service : manager.getRunningServices(Integer.MAX_VALUE)) {
+		        if ("no.hiof.coffeecontrol.service".equals(service.service.getClassName())) {
+		            return true;
+		        }
+		        //Log.i("Services","service.getClassName() = " +service.service.getClassName());
+
+		    }
+		    return false;
+		}
 		
 }
