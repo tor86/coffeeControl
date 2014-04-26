@@ -16,6 +16,7 @@ import com.jjoe64.graphview.LineGraphView;
 import android.os.Bundle;
 import android.app.Activity;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.Menu;
 import android.widget.LinearLayout;
 
@@ -39,8 +40,45 @@ public class GraphActivity extends Activity {
 		List<CoffeeData> coffeeList = new ArrayList();
 		DataSource datasource = new DataSource(this);
 		datasource.open();
-		coffeeList = datasource.getAllCoffee();
+		
+		String filterDate = getIntent().getExtras().getString("date");
+		String amountString = getIntent().getExtras().getString("amountToGraph");
+		
+		switch(getIntent().getExtras().getInt("selected")) {
+		case 1:
+			coffeeList = datasource.getAllCoffee();
+			break;
+		case 2:
+			coffeeList = datasource.getSelection(1, amountString);
+			Log.i("Case 2", "in case 2, with amount "+amountString);
+			break;
+		case 3:
+			coffeeList = datasource.getSelection(2, amountString);
+			Log.i("Case 3", "in case 3, with amount "+amountString);
+			break;
+		case 4:
+			coffeeList = datasource.getSelection(4, filterDate);
+			Log.i("Case 4", "in case 4, with date "+filterDate);
+			break;
+		case 5:
+			coffeeList = datasource.getSelection(3, filterDate);
+			Log.i("Case 5", "in case 5, with date "+filterDate);
+			break;
+		default:
+			coffeeList = datasource.getAllCoffee();
+			break;
+		}
+		
+		Log.i("Selected",Integer.toString(getIntent().getExtras().getInt("selected")) );
+		
 		datasource.close();
+		
+//		CoffeeList refList = new CoffeeList();
+//		coffeeList = refList.coffeedata;
+		
+		//List<String> coffeeList=getIntent().getExtras().getStringArrayList("shareCoffee");
+		
+		
 		
 		// Sorts the data
 		Comparator<CoffeeData> comparator = new Comparator<CoffeeData>() {

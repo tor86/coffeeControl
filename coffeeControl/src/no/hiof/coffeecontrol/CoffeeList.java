@@ -1,5 +1,8 @@
 package no.hiof.coffeecontrol;
 
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import no.hiof.coffeecontrol.MainActivity.CreateCoffee;
@@ -23,6 +26,25 @@ public class CoffeeList extends ListActivity {
 	List<CoffeeData> coffeedata;
 	String filterDate;
 	String filterAmount;
+	List<String> coffeeToGraph;
+	
+	String amountString;
+	int selection = 1;
+	
+	// Sorts the data
+	Comparator<CoffeeData> comparator = new Comparator<CoffeeData>() {
+	    public int compare(CoffeeData c1, CoffeeData c2) {
+	    	int num1=Integer.parseInt(c1.getDate())-Integer.parseInt(c2.getDate());
+	    	int num2=Integer.parseInt(c2.getDate())-Integer.parseInt(c1.getDate());
+	    	return num2;
+	        //return c2.getDate() - c1.getDate(); // use your logic
+	    }
+	};
+
+	
+	
+	
+	
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +67,9 @@ public class CoffeeList extends ListActivity {
 		
 		// Makes new list of coffee and dates
 		coffeedata = datasource.getAllCoffee();
+		selection=1;
+		// Sorts the list
+		Collections.sort(coffeedata, comparator);
 		
 		///// For making a selection /////
 		//List<CoffeeData> coffeedata = datasource.getSelection();
@@ -88,6 +113,12 @@ public class CoffeeList extends ListActivity {
 	@Override
 	public void onResume() {
 		datasource.open();
+		
+		// Makes new list of coffee and dates
+				coffeedata = datasource.getAllCoffee();
+				// Sorts the list
+				Collections.sort(coffeedata, comparator);
+		
 		super.onResume();
 	}
 	
@@ -104,8 +135,14 @@ public class CoffeeList extends ListActivity {
 		//datasource.getSelection();
 		EditText et = (EditText)findViewById(R.id.editText1);
 		
+		amountString = et.getText().toString();
+		
 		try{
 		coffeedata = datasource.getSelection(1, et.getText().toString());
+		
+		Collections.sort(coffeedata, comparator);
+		
+		selection=2;
 		
 		adapter.clear();
 		
@@ -124,8 +161,14 @@ public class CoffeeList extends ListActivity {
 	public void updateLesser(View view) {
 		EditText et = (EditText)findViewById(R.id.editText1);
 		
+		amountString = et.getText().toString();
+		
 		try{
 		coffeedata = datasource.getSelection(2, et.getText().toString());
+		
+		selection=3;
+		
+		Collections.sort(coffeedata, comparator);
 		
 		adapter.clear();
 		
@@ -148,6 +191,10 @@ public class CoffeeList extends ListActivity {
 		try{
 			coffeedata = datasource.getSelection(4, filterDate);
 			
+			Collections.sort(coffeedata, comparator);
+			
+			selection=4;
+			
 			adapter.clear();
 			
 			/// This is for newer versions 3.0+
@@ -169,6 +216,10 @@ public class CoffeeList extends ListActivity {
 		try{
 			coffeedata = datasource.getSelection(3, filterDate);
 			
+			Collections.sort(coffeedata, comparator);
+			
+			selection=5;
+			
 			adapter.clear();
 			
 			/// This is for newer versions 3.0+
@@ -186,7 +237,12 @@ public class CoffeeList extends ListActivity {
 	// Resets selection and adds all items
 	public void reset(View view) {
 		coffeedata = datasource.getAllCoffee();
+		
+		Collections.sort(coffeedata, comparator);
 		//coffeedata = datasource.getSelection(0,"null");
+		
+		selection=1;
+		
 		adapter.clear();
 		
 		/// This is for newer versions 3.0+
@@ -209,7 +265,14 @@ public class CoffeeList extends ListActivity {
 	}
 	
 	public void showGraph(View view) {
-		startActivity(new Intent(this,GraphActivity.class));
+		Intent i = new Intent(this,GraphActivity.class);
+		i.putExtra("selected", selection);
+		i.putExtra("date", filterDate);
+		i.putExtra("amountToGraph", amountString);
+		startActivity(i);
+		//startActivity(new Intent(this,GraphActivity.class));
 	}
+	
+	
 	
 }
