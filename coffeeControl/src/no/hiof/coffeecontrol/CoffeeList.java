@@ -1,14 +1,11 @@
 package no.hiof.coffeecontrol;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
-import no.hiof.coffeecontrol.MainActivity.CreateCoffee;
 import no.hiof.coffeecontrol.database.DataSource;
 import android.os.Bundle;
-import android.app.Activity;
 import android.app.ListActivity;
 import android.content.Intent;
 import android.util.Log;
@@ -26,9 +23,15 @@ public class CoffeeList extends ListActivity {
 	List<CoffeeData> coffeedata;
 	String filterDate;
 	String filterAmount;
-	List<String> coffeeToGraph;
+	
+	//Tried to send List directly to graph, but could not make it work
+	//Sending therefore an int which says which filtering, and date and amount
+	// via the Intent.putExtra.... Then the graph makes a new query to datasource
+	//List<String> coffeeToGraph;
 	
 	String amountString;
+	
+	// For checking which selected filter
 	int selection = 1;
 	
 	// Sorts the data
@@ -62,7 +65,7 @@ public class CoffeeList extends ListActivity {
 		datasource = new DataSource(this);
 		datasource.open();
 		
-		//////////////Should this be used?/////////////////
+		// Declares a new one, not used
 		//List<CoffeeData> coffeedata = datasource.getAllCoffee();
 		
 		// Makes new list of coffee and dates
@@ -265,6 +268,7 @@ public class CoffeeList extends ListActivity {
 	}
 	
 	public void showGraph(View view) {
+		// Sends extra data to the graphactivity, for easier sharing
 		Intent i = new Intent(this,GraphActivity.class);
 		i.putExtra("selected", selection);
 		i.putExtra("date", filterDate);

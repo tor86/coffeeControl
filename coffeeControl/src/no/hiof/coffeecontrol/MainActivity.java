@@ -350,6 +350,7 @@ public class MainActivity extends Activity {
 		
 	//////////////////////////
 		
+		// Set toggle button after checking if service is running or not
 		private void setToggle() {
 			ToggleButton tg = (ToggleButton)findViewById(R.id.toggleButton1);
 			tg.setChecked(isMyServiceRunning());

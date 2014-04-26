@@ -1,10 +1,8 @@
 package no.hiof.coffeecontrol;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +15,7 @@ import android.widget.TextView;
 
 public class CoffeeAdapter extends ArrayAdapter<CoffeeData> {
 	
+	// Variabels for smiley images
 	public int warning = 5;
 	public int critical = 10;
 	
@@ -41,6 +40,7 @@ public class CoffeeAdapter extends ArrayAdapter<CoffeeData> {
 	        ImageView image = (ImageView) view.findViewById(R.id.imageView1);
 
 	        if (date != null) {
+	        	//Setting date per entry
 	        	String yyyy = test.getDate().substring(0, 4);
 	        	String mm = test.getDate().substring(4, 6);
 	        	String dd = test.getDate().substring(6, 8);
@@ -49,8 +49,7 @@ public class CoffeeAdapter extends ArrayAdapter<CoffeeData> {
 	        }
 	        if (amount != null) {
 	        	//imageView1
-	        	//image.setImageResource(R.drawable.red_smiley);
-
+	        	// Setting amount per entry and sets correct smiley according to amount
 	        	if(test.getAmount()>critical)image.setImageResource(R.drawable.red_smiley);
 	        	else if(test.getAmount()>warning)image.setImageResource(R.drawable.yellow_smiley);
 	        	else image.setImageResource(R.drawable.green_smiley);

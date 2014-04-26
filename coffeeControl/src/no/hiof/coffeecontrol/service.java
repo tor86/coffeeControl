@@ -203,10 +203,8 @@ public class service extends Service implements SensorEventListener {
 		Log.d("Unregister", "Unregisterlistener Failed" + e);
 		}
 	}
-
 	
-	
-	
+	// Notice about service running
 	
 	@SuppressWarnings("deprecation")
 	private void startInForeground()
@@ -246,10 +244,6 @@ public class service extends Service implements SensorEventListener {
         // Set the service to foreground status and provide notification info
         startForeground(_notificationId, foregroundNotification);
 	}
-	
-	
-	
-	
 	
 	
 }

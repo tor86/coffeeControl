@@ -41,9 +41,11 @@ public class GraphActivity extends Activity {
 		DataSource datasource = new DataSource(this);
 		datasource.open();
 		
+		//Gets data from listactivity
 		String filterDate = getIntent().getExtras().getString("date");
 		String amountString = getIntent().getExtras().getString("amountToGraph");
 		
+		// Makes a selection based on which filter was used in listactivity
 		switch(getIntent().getExtras().getInt("selected")) {
 		case 1:
 			coffeeList = datasource.getAllCoffee();
@@ -73,6 +75,7 @@ public class GraphActivity extends Activity {
 		
 		datasource.close();
 		
+		// Tried this, did not work directly
 //		CoffeeList refList = new CoffeeList();
 //		coffeeList = refList.coffeedata;
 		
@@ -131,8 +134,6 @@ public class GraphActivity extends Activity {
 			dataset[arrayOriginal+i] = new GraphViewData(0,0);
 		}
 		
-		// 3 verdier, skal til 5, diff 2
-		
 		GraphViewSeries coffeeSeries = new GraphViewSeries(dataset);
 		
 		// init example series data
@@ -150,7 +151,7 @@ public class GraphActivity extends Activity {
 		    , "CoffeeGraph" // heading
 		);
 		
-		// Setting som custom stuff for the graph, like color
+		// Setting some custom stuff for the graph, like color
 		
 		graphView.setBackgroundColor(Color.rgb(255, 255, 255));
 		graphView.setManualYAxisBounds(yMax, 0);
