@@ -144,7 +144,7 @@ public class service extends Service implements SensorEventListener {
 		    	//Log.d("Time2",(int)time2);
 		    	
 		    	//if ((time2-time1)>3) {
-		        Toast.makeText(this, "shake detected w/ speed: " + speed, Toast.LENGTH_SHORT).show();
+		        //Toast.makeText(this, "shake detected w/ speed: " + speed, Toast.LENGTH_SHORT).show();
 		        
 		        // Calls the method for updating data if the shake is done after a set period
 		        doVibrate();
@@ -173,6 +173,8 @@ public class service extends Service implements SensorEventListener {
 		Vibrator v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
 
 		Log.d("doVibrate", "In doVibrate");
+		
+		Toast.makeText(this, "Shake detected, adding a cup", Toast.LENGTH_SHORT).show();
 		
 		// Connects to database and updates todays entry with 1 
 		datasource.open();
