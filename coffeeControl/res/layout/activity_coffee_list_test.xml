@@ -49,7 +49,7 @@
         android:textColorHint="#123456"
         android:ellipsize="end"
         android:hint="Cups"
-        android:gravity="center"
+        
         android:inputType="number" />
     
     <Button
@@ -79,7 +79,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
-        android:gravity="center"
+        
         android:textColorHint="#123456"
         android:ellipsize="end"
         android:hint="DD"
@@ -92,7 +92,7 @@
         android:id="@+id/editText3"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-		android:gravity="center"
+		
 		android:layout_weight="1"
 		android:textColorHint="#123456"
         android:ellipsize="end"
@@ -105,7 +105,7 @@
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
         android:layout_weight="1"
-        android:gravity="center"
+        
         android:textColorHint="#123456"
         android:ellipsize="end"
         android:hint="YYYY"
