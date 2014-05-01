@@ -1,0 +1,175 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:orientation="vertical" 
+    android:weightSum="6"
+     >
+
+    <ListView
+        android:id="@android:id/list"
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="2" >
+
+    </ListView>
+    
+    <View
+        android:id="@+id/view1"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="4"
+        android:weightSum="4"
+        android:orientation="vertical" >
+    
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:weightSum="3"
+        android:orientation="horizontal" >
+    
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:onClick="updateLesser"
+        android:text="@string/lesser" />    
+        
+    <EditText
+        android:id="@+id/editText1"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:textColorHint="#123456"
+        android:ellipsize="end"
+        android:hint="Cups"
+        android:gravity="center"
+        android:inputType="number" />
+    
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="fill_parent"
+        android:layout_weight="1"
+        android:layout_height="fill_parent"
+        android:onClick="updateGreater"
+        android:text="@string/greater" />
+    
+    </LinearLayout>
+    
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="0dp" />
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:weightSum="3"
+        android:orientation="horizontal" >
+    
+        <EditText
+        android:id="@+id/editText4"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColorHint="#123456"
+        android:ellipsize="end"
+        android:hint="DD"
+        android:inputType="number"
+        android:maxLength="2" />
+
+        
+    
+        <EditText
+        android:id="@+id/editText3"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+		android:gravity="center"
+		android:layout_weight="1"
+		android:textColorHint="#123456"
+        android:ellipsize="end"
+        android:hint="MM"
+        android:inputType="number"
+        android:maxLength="2" />
+        
+         <EditText
+        android:id="@+id/editText2"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:textColorHint="#123456"
+        android:ellipsize="end"
+        android:hint="YYYY"
+        android:inputType="date"
+        android:maxLength="4" />
+    
+    </LinearLayout>
+    
+	<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:weightSum="2"
+        android:orientation="horizontal" >
+         
+	
+	<Button
+        android:id="@+id/button3"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:onClick="updateBefore"
+        android:text="@string/before" />
+
+    <Button
+        android:id="@+id/button4"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+		android:layout_weight="1"
+        android:onClick="updateAfter"
+        android:text="@string/after" />
+	
+	</LinearLayout>
+    
+	<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:weightSum="2"
+        android:orientation="horizontal" >
+    
+	    <Button
+        android:id="@+id/button6"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:onClick="showGraph"
+        android:text="@string/graph" />
+	    
+	    <Button
+        android:id="@+id/button5"
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:layout_weight="1"
+        android:onClick="reset"
+        android:text="@string/reset" />
+	    
+	    
+	</LinearLayout>    
+	    
+	</LinearLayout>
+		
+</LinearLayout>

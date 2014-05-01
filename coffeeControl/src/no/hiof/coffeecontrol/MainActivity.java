@@ -52,7 +52,7 @@ public class MainActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_main);
+		setContentView(R.layout.activity_main_test);
 		
 		setToggle();
 		
@@ -76,7 +76,7 @@ public class MainActivity extends Activity {
 //		});
 //		
 //		List<TestData> testdata = datasource.getAllShows();
-		
+		//startActivity(new Intent(this,CoffeeList.class));
 	}
 	
 	// Runs a task in background for adding database entries
@@ -163,12 +163,12 @@ public class MainActivity extends Activity {
 		super.onPause();
 	}
 	
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.main, menu);
-		return true;
-	}
+//	@Override
+//	public boolean onCreateOptionsMenu(Menu menu) {
+//		// Inflate the menu; this adds items to the action bar if it is present.
+//		getMenuInflater().inflate(R.menu.main, menu);
+//		return true;
+//	}
 
 	public void startMyService(View view) {
 		// This is an old version, which cause app to crash on resume:

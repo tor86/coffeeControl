@@ -52,7 +52,7 @@ public class CoffeeList extends ListActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_coffee_list);
+		setContentView(R.layout.activity_coffee_list_test);
 		
 		ListView listView = getListView();
 		listView.setOnItemLongClickListener(new OnItemLongClickListener() {

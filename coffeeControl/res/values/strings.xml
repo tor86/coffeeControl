@@ -6,7 +6,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_coffee_list">CoffeeList</string>
     <string name="title_activity_widget">WidgetActivity</string>
-    <string name="shake">Shakelistener</string>
+    <string name="shake">Shakelistener --&gt;</string>
     <string name="history">Open history</string>
     <string name="delete_all">Delete database</string>
     <string name="plus_one">+1 Cup</string>

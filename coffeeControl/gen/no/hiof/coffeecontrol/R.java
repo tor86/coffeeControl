@@ -29,38 +29,42 @@ public final class R {
         public static final int yellow_smiley=0x7f020005;
     }
     public static final class id {
-        public static final int action_settings=0x7f090016;
+        public static final int action_settings=0x7f090018;
         public static final int button1=0x7f090002;
         public static final int button2=0x7f090000;
         public static final int button3=0x7f090006;
         public static final int button4=0x7f090008;
         public static final int button5=0x7f090007;
         public static final int button6=0x7f090009;
-        public static final int button7=0x7f090011;
-        public static final int button8=0x7f090012;
-        public static final int button9=0x7f090013;
+        public static final int button7=0x7f090013;
+        public static final int button8=0x7f090014;
+        public static final int button9=0x7f090015;
         public static final int editText1=0x7f090001;
         public static final int editText2=0x7f090003;
         public static final int editText3=0x7f090005;
         public static final int editText4=0x7f090004;
-        public static final int imageView1=0x7f09000b;
-        public static final int linearBar=0x7f09000a;
-        public static final int relativeLayout1=0x7f09000e;
-        public static final int sync_button=0x7f090015;
-        public static final int textView1=0x7f090010;
-        public static final int textView2=0x7f09000c;
-        public static final int textView3=0x7f09000f;
-        public static final int toggleButton1=0x7f09000d;
-        public static final int widget_textview=0x7f090014;
+        public static final int imageView1=0x7f09000d;
+        public static final int linearBar=0x7f09000c;
+        public static final int relativeLayout1=0x7f090010;
+        public static final int sync_button=0x7f090017;
+        public static final int textView1=0x7f090012;
+        public static final int textView2=0x7f09000e;
+        public static final int textView3=0x7f090011;
+        public static final int toggleButton1=0x7f09000f;
+        public static final int view1=0x7f09000a;
+        public static final int view2=0x7f09000b;
+        public static final int widget_textview=0x7f090016;
     }
     public static final class layout {
         public static final int activity_coffee_list=0x7f030000;
-        public static final int activity_graph=0x7f030001;
-        public static final int activity_main=0x7f030002;
-        public static final int activity_main_old=0x7f030003;
-        public static final int activity_widget=0x7f030004;
-        public static final int one_element=0x7f030005;
-        public static final int one_element_old=0x7f030006;
+        public static final int activity_coffee_list_test=0x7f030001;
+        public static final int activity_graph=0x7f030002;
+        public static final int activity_main=0x7f030003;
+        public static final int activity_main_old=0x7f030004;
+        public static final int activity_main_test=0x7f030005;
+        public static final int activity_widget=0x7f030006;
+        public static final int one_element=0x7f030007;
+        public static final int one_element_old=0x7f030008;
     }
     public static final class menu {
         public static final int coffee_list=0x7f080000;
